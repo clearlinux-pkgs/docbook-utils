@@ -4,7 +4,7 @@
 #
 Name     : docbook-utils
 Version  : 0.6.14
-Release  : 9
+Release  : 10
 URL      : ftp://sources.redhat.com/pub/docbook-tools/new-trials/SOURCES/docbook-utils-0.6.14.tar.gz
 Source0  : ftp://sources.redhat.com/pub/docbook-tools/new-trials/SOURCES/docbook-utils-0.6.14.tar.gz
 Summary  : No detailed summary available
