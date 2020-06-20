@@ -4,35 +4,32 @@
 #
 Name     : docbook-utils
 Version  : 0.6.14
-Release  : 15
+Release  : 16
 URL      : ftp://sources.redhat.com/pub/docbook-tools/new-trials/SOURCES/docbook-utils-0.6.14.tar.gz
 Source0  : ftp://sources.redhat.com/pub/docbook-tools/new-trials/SOURCES/docbook-utils-0.6.14.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0
-Requires: docbook-utils-bin
-Requires: docbook-utils-doc
-Requires: docbook-utils-data
+Requires: docbook-utils-bin = %{version}-%{release}
+Requires: docbook-utils-data = %{version}-%{release}
+Requires: docbook-utils-license = %{version}-%{release}
+Requires: docbook-utils-man = %{version}-%{release}
 Patch1: build.patch
 
 %description
-
+Eric Bischoff
+ebisch@cybercable.tm.fr				July 18, 2000
+Introduction
+------------
 
 %package bin
 Summary: bin components for the docbook-utils package.
 Group: Binaries
-Requires: docbook-utils-data
+Requires: docbook-utils-data = %{version}-%{release}
+Requires: docbook-utils-license = %{version}-%{release}
 
 %description bin
 bin components for the docbook-utils package.
-
-
-%package doc
-Summary: doc components for the docbook-utils package.
-Group: Documentation
-
-%description doc
-doc components for the docbook-utils package.
 
 
 %package data
@@ -43,16 +40,56 @@ Group: Data
 data components for the docbook-utils package.
 
 
+%package license
+Summary: license components for the docbook-utils package.
+Group: Default
+
+%description license
+license components for the docbook-utils package.
+
+
+%package man
+Summary: man components for the docbook-utils package.
+Group: Default
+
+%description man
+man components for the docbook-utils package.
+
+
 %prep
 %setup -q -n docbook-utils-0.6.14
+cd %{_builddir}/docbook-utils-0.6.14
 %patch1 -p1
 
 %build
-%configure --disable-static 
-make V=1 %{?_smp_mflags}
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1592623235
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
+%configure --disable-static
+make  %{?_smp_mflags}
+
+%check
+export LANG=C.UTF-8
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
+make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
+export SOURCE_DATE_EPOCH=1592623235
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/docbook-utils
+cp %{_builddir}/docbook-utils-0.6.14/COPYING %{buildroot}/usr/share/package-licenses/docbook-utils/dfac199a7539a404407098a2541b9482279f690d
 %make_install
 
 %files
@@ -72,11 +109,6 @@ rm -rf %{buildroot}
 /usr/bin/jw
 /usr/bin/sgmldiff
 
-%files doc
-%defattr(-,root,root,-)
-%doc /usr/share/man/man1/*
-%doc /usr/share/man/man7/*
-
 %files data
 %defattr(-,root,root,-)
 /usr/share/sgml/docbook/utils-0.6.14/backends/dvi
@@ -92,3 +124,24 @@ rm -rf %{buildroot}
 /usr/share/sgml/docbook/utils-0.6.14/frontends/docbook
 /usr/share/sgml/docbook/utils-0.6.14/helpers/docbook2man-spec.pl
 /usr/share/sgml/docbook/utils-0.6.14/helpers/docbook2texi-spec.pl
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/docbook-utils/dfac199a7539a404407098a2541b9482279f690d
+
+%files man
+%defattr(0644,root,root,0755)
+/usr/share/man/man1/docbook2dvi.1
+/usr/share/man/man1/docbook2html.1
+/usr/share/man/man1/docbook2man-spec.pl.1
+/usr/share/man/man1/docbook2man.1
+/usr/share/man/man1/docbook2pdf.1
+/usr/share/man/man1/docbook2ps.1
+/usr/share/man/man1/docbook2rtf.1
+/usr/share/man/man1/docbook2tex.1
+/usr/share/man/man1/docbook2texi-spec.pl.1
+/usr/share/man/man1/docbook2texi.1
+/usr/share/man/man1/jw.1
+/usr/share/man/man1/sgmldiff.1
+/usr/share/man/man7/backend-spec.7
+/usr/share/man/man7/frontend-spec.7
