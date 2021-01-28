@@ -1,7 +1,6 @@
 # This file contains recursive sources that require this package
 boinc-client
 colord-gtk
-compat-gmime-26
 firewalld
 flac
 gcc
@@ -12,5 +11,6 @@ gmime
 gtk-doc
 kshisen
 mingw-gcc
+mutt
 nftables
 samba

@@ -4,9 +4,9 @@
 #
 Name     : docbook-utils
 Version  : 0.6.14
-Release  : 16
-URL      : ftp://sources.redhat.com/pub/docbook-tools/new-trials/SOURCES/docbook-utils-0.6.14.tar.gz
-Source0  : ftp://sources.redhat.com/pub/docbook-tools/new-trials/SOURCES/docbook-utils-0.6.14.tar.gz
+Release  : 17
+URL      : https://sourceware.org/ftp/docbook-tools/new-trials/SOURCES/docbook-utils-0.6.14.tar.gz
+Source0  : https://sourceware.org/ftp/docbook-tools/new-trials/SOURCES/docbook-utils-0.6.14.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0
@@ -66,7 +66,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1592623235
+export SOURCE_DATE_EPOCH=1611812665
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -83,10 +83,10 @@ export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-make VERBOSE=1 V=1 %{?_smp_mflags} check
+make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1592623235
+export SOURCE_DATE_EPOCH=1611812665
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/docbook-utils
 cp %{_builddir}/docbook-utils-0.6.14/COPYING %{buildroot}/usr/share/package-licenses/docbook-utils/dfac199a7539a404407098a2541b9482279f690d
